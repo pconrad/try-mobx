@@ -1,23 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { observable } from "mobx";
+import { observable, configure, action } from "mobx";
 import { observer } from "mobx-react";
-
+import DevTools from "mobx-react-devtools"
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {register} from "./serviceWorker";
+configure({enforceActions:true});
 
 const appState = observable({
   count : 0,
-  incCount: () => {
+  incCount: action("Increment Counter",() => {
     appState.count += 1;
-  },
-  decCount: () => {
+  }),
+  decCount: action("Decrement Counter",() => {
     appState.count -= 1;
-  }
+  })
 });
 
 const Counter = observer(props => (
